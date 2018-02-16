@@ -10,17 +10,22 @@
   using Sitecore.Links;
   using Sitecore.Web.UI.HtmlControls.Data;
   using Sitecore.Data.Fields;
+  using Sitecore.Data;
 
   public class ValueLookupField : Sitecore.Data.Fields.ValueLookupField
   {
     public ValueLookupField(Field innerField) : base(innerField)
     {
-     
     }
     public override void RemoveLink(ItemLink itemLink)
     {
       Assert.ArgumentNotNull(itemLink, "itemLink");
-      this.Clear();
+      Database database = Factory.GetDatabase(itemLink.TargetDatabaseName);
+      Item item = database.GetItem(itemLink.TargetItemID);
+      if (item != null && base.Value == item.Name)
+      {
+        base.Clear();
+      }
     }
   }
 }

@@ -18,9 +18,9 @@
     public override void RemoveLink(ItemLink itemLink)
     {
       Assert.ArgumentNotNull(itemLink, "itemLink");
-      if (itemLink.TargetItemID == this.TargetID)
+      if (base.TargetID == itemLink.TargetItemID)
       {
-        this.Clear();
+        base.Clear();
       }
     }
   }
